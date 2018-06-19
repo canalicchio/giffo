@@ -43,6 +43,7 @@ describe("layer reducer", () => {
     it("sets duration", () => {
         store.dispatch({
             type: SET_LAYER_DURATION,
+
             duration: 50,
         });
         expect(store.getState().duration).toEqual(50);
@@ -50,6 +51,7 @@ describe("layer reducer", () => {
     it("doesnt set duration to a negative", () => {
         store.dispatch({
             type: SET_LAYER_DURATION,
+
             duration: -50,
         });
         expect(store.getState().duration > 0).toEqual(true);
@@ -57,19 +59,21 @@ describe("layer reducer", () => {
     it("adds a keyframe", () => {
         store.dispatch({
             type: ADD_KEYFRAME,
+
             keyframe: {
-                id: '1',
-                property: 'x',
-                value: 0,
                 frame: 0,
+                id: "1",
+                property: "x",
+                value: 0,
             },
         });
         store.dispatch({
             type: ADD_KEYFRAME,
+
             keyframe: {
-                id: '2',
-                property: 'y',
                 frame: 0,
+                id: "2",
+                property: "y",
                 value: 0,
             },
         });
@@ -78,19 +82,21 @@ describe("layer reducer", () => {
     it("removes a keyframe", () => {
         store.dispatch({
             type: REMOVE_KEYFRAME,
-            id: '1',
+
+            id: "1",
         });
         expect(store.getState().keyframes.length).toEqual(1);
     });
     it("updates a keyframe", () => {
         store.dispatch({
             type: UPDATE_KEYFRAME,
+
             keyframe: {
-                id: '2',
+                id: "2",
                 value: 50,
             },
         });
         expect(store.getState().keyframes[0].value).toEqual(50);
-        expect(store.getState().keyframes[0].property).toEqual('y');
+        expect(store.getState().keyframes[0].property).toEqual("y");
     });
 });

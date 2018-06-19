@@ -2,8 +2,6 @@ import {
     PAUSE,
     PLAY,
     SEEK_FRAME,
-    SET_DURATION,
-    SET_FPS,
     STEP_FRAME_BACKWARD,
     STEP_FRAME_FORWARD,
 } from "../constants";

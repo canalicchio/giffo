@@ -1,6 +1,6 @@
 import {
-    MOVE_LAYER,
     ADD_LAYER,
+    MOVE_LAYER,
     REMOVE_LAYER_AT,
     SET_DURATION,
     SET_FPS,
