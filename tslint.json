@@ -1,0 +1,12 @@
+{
+    "extends": ["tslint:recommended", "tslint-react"],
+    "rules": {
+        "no-console": false
+    },
+    "linterOptions": {
+        "exclude": [
+            "config/**/*.js",
+            "node_modules/**/*.ts"
+        ]
+    }
+}
