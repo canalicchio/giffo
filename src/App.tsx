@@ -1,6 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import Timeline from "./Timeline";
+
+import Renderer from "./Renderer";
+
 import {
     CompositionState,
     PlayerState,
@@ -8,8 +12,6 @@ import {
 } from "./types/";
 
 import * as constants from "./constants";
-
-import "./App.css";
 
 interface IState {
     canvas?: HTMLCanvasElement | null;
@@ -27,9 +29,11 @@ interface IdispatchProps {
     onChangeFps: (ev: React.ChangeEvent<HTMLInputElement>) => void;
     onChangeHeight: (ev: React.ChangeEvent<HTMLInputElement>) => void;
     onChangeWidth: (ev: React.ChangeEvent<HTMLInputElement>) => void;
+    onPlay: (ev: React.MouseEvent<HTMLElement>) => void;
 }
 
-const ratio = 2;
+import "./App.css";
+
 class App extends React.Component<IProps & IdispatchProps, IState> {
     constructor(props: IProps & IdispatchProps) {
         super(props);
@@ -41,48 +45,10 @@ class App extends React.Component<IProps & IdispatchProps, IState> {
         };
     }
 
-    public componentDidMount() {
-       const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-       const rendererImg = document.getElementById("renderer") as HTMLImageElement;
-       let ctx;
-       if (canvas && rendererImg) {
-           ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-           rendererImg.onload = () => {
-               this.imageLoaded();
-           };
-
-           this.setState({
-               canvas,
-               ctx,
-               img: rendererImg,
-           });
-       }
-
-    }
-
-    public imageLoaded() {
-        console.log("imageLoaded");
-    }
-
-    public updateCanvasDimensions() {
-
-        if (this.state && this.state.canvas && this.state.ctx) {
-            if (ratio * this.props.composition.width !== this.state.canvas.width ||
-                ratio * this.props.composition.height !== this.state.canvas.height) {
-                this.state.canvas.width = this.props.composition.width * ratio;
-                this.state.canvas.height = this.props.composition.height * ratio;
-
-                this.state.canvas.style.width = this.props.composition.width + "px";
-                this.state.canvas.style.height = this.props.composition.height + "px";
-                this.state.ctx.scale(ratio, ratio);
-            }
-        }
-    }
-
     public render() {
-        this.updateCanvasDimensions();
         return (
             <div className="App">
+                <Renderer />
                 <div className="sidebar">
                     <div className="settings-title">Composition settings</div>
                     <div className="settings-element">
@@ -126,13 +92,14 @@ class App extends React.Component<IProps & IdispatchProps, IState> {
                     </div>
                 </div>
                 <div className="player">
-                    <button className="play-button">
+                    <button className="play-button" onClick={this.props.onPlay}>
                         <i className="play-icon" />
                     </button>
                     <button className="play-button">
                         <i className="record-icon" />
                     </button>
                 </div>
+                <Timeline />
             </div>
         );
     }
@@ -143,7 +110,13 @@ const mapStateToProps = (state: StoreState): IProps => ({
     player: state.player,
 });
 
-const mapDispatchToProps = (dispatch: any): IdispatchProps => ({
+const mapDispatchToProps = (dispatch: any, ownProps: any): IdispatchProps => ({
+    onPlay: (ev: React.MouseEvent<HTMLElement>) => {
+        dispatch({
+            type: constants.PLAY,
+        });
+    },
+
     onChangeDuration: (ev: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
             type: constants.SET_DURATION,

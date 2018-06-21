@@ -8,7 +8,10 @@ import {
     UPDATE_KEYFRAME,
 } from "../constants/";
 
-import { RenderableState } from "../types/index";
+import {
+    Keyframe,
+    RenderableState,
+} from "../types/index";
 
 export const LayerInitialState: RenderableState = {
     duration: 100,
@@ -18,19 +21,22 @@ export const LayerInitialState: RenderableState = {
 };
 
 export function layerReducer(state: RenderableState = LayerInitialState, action: LayerAction): RenderableState {
+    let keyframes: Keyframe[] = [];
     switch (action.type) {
         case ADD_KEYFRAME:
+            keyframes = [
+                ...state.keyframes,
+                action.keyframe,
+            ];
             return {
                 ...state,
-                keyframes: [
-                    ...state.keyframes,
-                    action.keyframe,
-                ],
+                keyframes,
             };
         case REMOVE_KEYFRAME:
+            keyframes = state.keyframes.filter((k) => k.id !== action.id);
             return {
                 ...state,
-                keyframes: state.keyframes.filter((k) => k.id !== action.id),
+                keyframes,
             };
         case UPDATE_KEYFRAME:
             let index = -1;
@@ -40,20 +46,21 @@ export function layerReducer(state: RenderableState = LayerInitialState, action:
                 }
             });
             if (index !== -1) {
+                keyframes = [
+                    ...state.keyframes.slice(0, index),
+                    {
+                        ...state.keyframes[index],
+                        ...action.keyframe,
+                    },
+                    ...state.keyframes.slice(index + 1),
+                ];
                 return {
                     ...state,
-                    keyframes: [
-                        ...state.keyframes.slice(0, index),
-                        {
-                            ...state.keyframes[index],
-                            ...action.keyframe,
-                        },
-                        ...state.keyframes.slice(index + 1),
-                    ],
+                    keyframes,
                 };
-            } else {
-                return state;
             }
+
+            return state;
         case SET_LAYER_DURATION:
             return { ...state, duration: Math.max(1, action.duration) };
         case SET_START:

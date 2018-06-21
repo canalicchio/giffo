@@ -10,6 +10,8 @@ import {
 
 import { compositionReducer } from "./reducers/composition";
 
+import { rendererReducer } from "./reducers/renderer";
+
 import {
     PlayerInitialState,
     playerMiddleware,
@@ -21,6 +23,7 @@ import { StoreState } from "./types/index";
 const mainReducer = combineReducers({
     composition: compositionReducer,
     player: playerReducer,
+    renderer: rendererReducer,
 });
 
 export const store = createStore<StoreState, any, any, any>(mainReducer, {

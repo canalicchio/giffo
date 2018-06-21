@@ -20,8 +20,65 @@ export const CompositionInitialState: CompositionState = {
     width: 500,
 
     duration: 2,
-    fps: 12,
-    layers: [],
+    fps: 30,
+    layers: [
+        {
+            duration: 1,
+            start: 0,
+
+            keyframes: [
+                {
+                    id: "0",
+
+                    frame: 0,
+                    property: "x",
+                    value: 0,
+                },
+                {
+                    id: "1",
+
+                    frame: 1000,
+                    property: "x",
+                    value: 200,
+                },
+                {
+                    id: "3",
+
+                    frame: 0,
+                    property: "y",
+                    value: 100,
+                },
+                {
+                    id: "2",
+
+                    frame: 1000,
+                    property: "y",
+                    value: 200,
+                },
+            ],
+        },
+        {
+            duration: 1,
+            start: 0,
+
+            keyframes: [
+                {
+                    id: "0",
+
+                    frame: 300,
+                    property: "x",
+                    value: 0,
+                },
+                {
+                    id: "1",
+
+                    frame: 1000,
+                    property: "x",
+                    value: 200,
+                },
+            ],
+        },
+    ],
 };
 
 export function compositionReducer(

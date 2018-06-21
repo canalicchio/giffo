@@ -1,6 +1,7 @@
 // PLAYER
 export const PAUSE = "PAUSE";
 export const PLAY = "PLAY";
+export const TOGGLE_PLAYPAUSE = "TOGGLE_PLAYPAUSE";
 export const SEEK_FRAME = "SEEK_FRAME";
 export const SET_DURATION = "SET_DURATION";
 export const SET_FPS = "SET_FPS";
@@ -8,6 +9,7 @@ export const STEP_FRAME_BACKWARD = "STEP_FRAME_BACKWARD";
 export const STEP_FRAME_FORWARD = "STEP_FRAME_FORWARD";
 export type PAUSE = typeof PAUSE;
 export type PLAY = typeof PLAY;
+export type TOGGLE_PLAYPAUSE = typeof TOGGLE_PLAYPAUSE;
 export type SEEK_FRAME = typeof SEEK_FRAME;
 export type SET_DURATION = typeof SET_DURATION;
 export type SET_FPS = typeof SET_FPS;
@@ -41,3 +43,7 @@ export type SET_LAYER_DURATION = typeof SET_LAYER_DURATION;
 export type ADD_KEYFRAME = typeof ADD_KEYFRAME;
 export type REMOVE_KEYFRAME = typeof REMOVE_KEYFRAME;
 export type UPDATE_KEYFRAME = typeof UPDATE_KEYFRAME;
+
+// RENDERER
+export const ANIMATORS_UPDATED = "ANIMATORS_UPDATED";
+export type ANIMATORS_UPDATED = typeof ANIMATORS_UPDATED;

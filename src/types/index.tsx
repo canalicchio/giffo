@@ -4,7 +4,12 @@ export type Keyframe = Readonly<{
     property: string;
     frame: number;
     value: number | string;
-    easing: string;
+    easing?: string;
+}>;
+
+export type Property = Readonly<{
+    name: string;
+    value: number | string;
 }>;
 
 export type RenderableState = Readonly<{
@@ -21,6 +26,10 @@ export type CompositionState = Readonly<{
     fps: number;
 }>;
 
+export type RendererState = Readonly<{
+    animatorsDirty: boolean;
+}>;
+
 export type PlayerState = Readonly<{
     currentFrame: number;
     playing: boolean;
@@ -31,4 +40,5 @@ export type PlayerState = Readonly<{
 export type StoreState = Readonly<{
     player: PlayerState;
     composition: CompositionState;
+    renderer: RendererState;
 }>;

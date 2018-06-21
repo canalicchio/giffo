@@ -1,0 +1,31 @@
+.frames-slider {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.frames-slider .frame {
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    border: 1px solid #333;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.frames-slider .frame:not(:first-child) {
+    border-left: none;
+}
+.frames-slider .frame.current {
+    background: #333;
+    border: 1px solid #333;
+}
+
+.frames-slider .frame.rendered:after {
+    content: '';
+    display: block;
+    position: relative;
+    top: 20px;
+    left: -1px;
+    height: 2px;
+    width: calc(100% + 2px);
+    background-color: #58ba00;
+}

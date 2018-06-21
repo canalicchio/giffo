@@ -12,6 +12,10 @@ export interface Iplay {
     type: constants.PLAY;
 }
 
+export interface ItogglePlayPause {
+    type: constants.TOGGLE_PLAYPAUSE;
+}
+
 export interface Ipause {
     type: constants.PAUSE;
 }
@@ -34,6 +38,7 @@ export type PlayerAction =
     IstepFrameBackward |
     Iplay |
     Ipause |
+    ItogglePlayPause |
     IseekFrame |
     IsetDuration |
     IsetFPS;
