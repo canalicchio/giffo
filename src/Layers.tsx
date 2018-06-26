@@ -26,8 +26,7 @@ class Layers extends React.Component<IProps & IdispatchProps> {
         const layers = this.props.composition.layers;
         return (
             <div className="layers">
-                <h1>Layers</h1>
-                {layers.map((l, i) => (<Layer key={`layer-${i}`} className="layer" layer={l} />))}
+                {layers.map((l, i) => (<Layer key={`layer-${i}`} className="layer" layer={l} index={i} />))}
             </div>
         );
     }

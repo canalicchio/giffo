@@ -1,22 +1,22 @@
 import * as React from "react";
-import { connect } from "react-redux";
-
 import { renderToStaticMarkup } from "react-dom/server";
+import { connect } from "react-redux";
 
 import anime from "animejs";
 
-import Svg from "./Svg";
+import * as constants from "./constants";
 
 import {
     CompositionState,
-    Keyframe,
     PlayerState,
     Property,
     RendererState,
     StoreState,
 } from "./types/";
 
-import * as constants from "./constants";
+import Svg from "./Svg";
+
+import { keyframesToAnimators } from "./helpers/layer";
 
 interface IdispatchProps {
     onUpdateAnimators: () => void;
@@ -33,48 +33,6 @@ interface IRendererState {
 }
 
 export type RendererProps = IStateToProps & IdispatchProps;
-
-const keyframesToProperties = (keyframes: Keyframe[], values: any): any => {
-    const props = keyframes.reduce((acc, k: Keyframe, i) => {
-        if (!acc[k.property]) {
-            acc[k.property] = {
-                keyframes: [],
-            };
-        }
-
-        acc[k.property].keyframes.push(k);
-        return acc;
-    }, {});
-
-    Object.keys(props).forEach((p) => {
-        props[p].keyframes.sort((a: Keyframe, b: Keyframe) => a.frame > b.frame);
-        if (props[p].keyframes.length > 0) {
-            values[p] = props[p].keyframes[0].value;
-        }
-        if (props[p].keyframes.length > 1) {
-            const animeKeyframes: any[] = [];
-            let currentFrame = 0;
-            props[p].keyframes.forEach((k: Keyframe, i: number) => {
-                const duration = k.frame - currentFrame;
-
-                animeKeyframes.push({
-                    duration,
-                    value: k.value,
-                });
-
-                currentFrame = duration;
-            });
-            props[p].animation = anime({
-                targets: values,
-
-                autoplay: false,
-                easing: "easeInOutQuart",
-                [p]: animeKeyframes,
-            });
-        }
-    });
-    return props;
-};
 
 const ratio = 2;
 
@@ -148,10 +106,9 @@ class Renderer extends React.Component<RendererProps, IRendererState> {
                 const keyframes = l.keyframes;
                 const values = {};
                 this.layers.push(values);
-                this.properties.push(keyframesToProperties(keyframes, values));
+                this.properties.push(keyframesToAnimators(keyframes, values));
             });
             this.props.onUpdateAnimators();
-            console.log(this.properties);
         }
 
         this.properties.forEach((l: any) => {

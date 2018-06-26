@@ -22,3 +22,50 @@ canvas {
     background-size: 7px 7px;
 }
 
+.property-label, .frames-label, .layer-label {
+    width: 100px;
+    display: inline-block;
+}
+.property-timeline, .layer-timeline {
+    display: inline-block;
+    position: relative;
+}
+.property-keyframes {
+    position: relative;
+    width: 600px;
+}
+
+.keyframe {
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #aca9c6;
+    background: #f9e639;
+    width: 7px;
+    height: 7px;
+    transform: rotateZ(45deg);
+    box-shadow: -1px -1px 0 #424066;
+}
+.frames {
+    display: inline-block;
+}
+.layer-details {
+    height: 42px;
+}
+.layer-timeline {
+    height: 42px;
+    vertical-align: middle;
+}
+.layer-duration {
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 40px;
+    vertical-align: top;
+    background-color:#7c5fb0;
+    margin: 1px;
+    cursor: grab;
+}
+
+.layer-details {
+    background: gray;
+}

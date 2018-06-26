@@ -91,7 +91,7 @@ export function compositionReducer(
                   ...state,
                     layers: [
                         ...state.layers.slice(0, action.index),
-                        layerReducer(state[action.index], action.layerAction),
+                        layerReducer(state.layers[action.index], action.layerAction),
                         ...state.layers.slice(action.index + 1),
                     ],
                 };
