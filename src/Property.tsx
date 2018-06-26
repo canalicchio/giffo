@@ -10,7 +10,6 @@ import {
 } from "./types/";
 
 interface IState {
-    draggingKeyframe: boolean;
     startXKeyframe: number;
     startYKeyframe: number;
     keyframes: any[];
@@ -37,7 +36,6 @@ class LayerProperty extends React.Component<LayerPropertyProps, IState> {
         super(props);
 
         this.state = {
-            draggingKeyframe: false,
             startXKeyframe: 0,
             startYKeyframe: 0,
 
@@ -54,9 +52,9 @@ class LayerProperty extends React.Component<LayerPropertyProps, IState> {
                 dragImgEl.innerHTML = " . ";
                 document.body.appendChild(dragImgEl);
                 e.dataTransfer.setDragImage(dragImgEl, 0, 0);
+                e.dataTransfer.dropEffect = "none";
 
                 this.setState({
-                    draggingKeyframe: true,
                     startXKeyframe: e.clientX,
                     startYKeyframe: e.clientY,
                 });
@@ -67,10 +65,6 @@ class LayerProperty extends React.Component<LayerPropertyProps, IState> {
 
             const k = this.state.keyframes[index];
             this.props.onDragEnd(k);
-
-            this.setState({
-                draggingKeyframe: false,
-            });
         };
     }
 
@@ -81,7 +75,7 @@ class LayerProperty extends React.Component<LayerPropertyProps, IState> {
 
             const steps = Math.ceil(diffx / singleStep);
             const newFrame = this.props.property.keyframes[index].frame + (steps / this.props.composition.fps * 1000);
-            if (newFrame > 0) {
+            if (newFrame >= 0) {
                 this.setState({
                     keyframes: [
                         ...this.state.keyframes.slice(0, index),
