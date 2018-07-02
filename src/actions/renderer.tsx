@@ -5,6 +5,8 @@ import { LayerAction } from "./layer";
 
 export interface IanimatorsUpdated {
     type: constants.ANIMATORS_UPDATED;
+    animatorsTree: any;
+    renderTree: any;
 }
 
 export interface IaddLayer {

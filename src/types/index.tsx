@@ -24,10 +24,14 @@ export type CompositionState = Readonly<{
     duration: number;
     layers: RenderableState[];
     fps: number;
+    currentLayer: number;
+    currentKeyframe: number;
 }>;
 
 export type RendererState = Readonly<{
     animatorsDirty: boolean;
+    animatorsTree: any[];
+    renderTree: any[];
 }>;
 
 export type PlayerState = Readonly<{

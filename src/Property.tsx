@@ -27,6 +27,7 @@ interface IProps {
     layerIndex: number;
     name: string;
     property: any;
+    start: number;
 }
 
 export type LayerPropertyProps = IProps & IStateToProps & IdispatchProps;
@@ -98,7 +99,8 @@ class LayerProperty extends React.Component<LayerPropertyProps, IState> {
                 <div className="property-timeline">
                     <div className="property-keyframes">
                         {keyframes.map((k: any, index: number) => {
-                            const framesDuration = k.frame * this.props.composition.fps / 1000;
+                            let framesDuration = this.props.start * this.props.composition.fps;
+                            framesDuration += k.frame * this.props.composition.fps / 1000;
                             const style: React.CSSProperties = {
                                 position: "absolute",
 

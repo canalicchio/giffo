@@ -63,9 +63,26 @@ canvas {
     vertical-align: top;
     background-color:#7c5fb0;
     margin: 1px;
-    cursor: grab;
 }
 
 .layer-details {
     background: gray;
+}
+
+.layer-duration .dragHandle {
+    position: absolute;
+    background: yellow;
+    width: 10px;
+    height: 100%;
+    top: 0;
+}
+
+.layer-duration .dragHandle:nth-child(1) {
+    left: 0;
+    cursor: grab;
+}
+
+.layer-duration .dragHandle:nth-child(2) {
+    right: 0;
+    cursor: grab;
 }

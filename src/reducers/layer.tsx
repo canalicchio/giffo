@@ -62,7 +62,7 @@ export function layerReducer(state: RenderableState = LayerInitialState, action:
 
             return state;
         case SET_LAYER_DURATION:
-            return { ...state, duration: Math.max(1, action.duration) };
+            return { ...state, duration: Math.max(0.2, action.duration) };
         case SET_START:
             return { ...state, start: Math.max(0, action.start) };
     }

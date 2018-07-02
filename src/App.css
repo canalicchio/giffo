@@ -1,12 +1,15 @@
 .sidebar {
-    width: 200px;
-    min-height: 100px;
-    max-height: 100%;
-    border: 1px solid #333333;
     position: absolute;
     right: 0;
     top: 0;
+}
+.pane {
+    border: 1px solid #333333;
     padding: 10px 10px;
+    min-height: 100px;
+    max-height: 100%;
+    width: 200px;
+    background: #565656;
 }
 .settings-title {
     color: #eaf3f6;

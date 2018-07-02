@@ -10,7 +10,10 @@ import {
 
 import { compositionReducer } from "./reducers/composition";
 
-import { rendererReducer } from "./reducers/renderer";
+import {
+    rendererMiddleware,
+    rendererReducer,
+} from "./reducers/renderer";
 
 import {
     PlayerInitialState,
@@ -28,4 +31,4 @@ const mainReducer = combineReducers({
 
 export const store = createStore<StoreState, any, any, any>(mainReducer, {
     player: PlayerInitialState,
-}, applyMiddleware(playerMiddleware));
+}, applyMiddleware(playerMiddleware, rendererMiddleware));

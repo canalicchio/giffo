@@ -44,7 +44,6 @@ const mapDispatchToProps = (dispatch: any, ownProps: any): IdispatchProps => ({
             frame: ownProps.index,
         });
     },
-
 });
 
 const LayersConnected = connect(mapStateToProps, mapDispatchToProps)(Layers);

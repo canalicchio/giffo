@@ -2,8 +2,6 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { connect } from "react-redux";
 
-import anime from "animejs";
-
 import * as constants from "./constants";
 
 import {
@@ -15,8 +13,6 @@ import {
 } from "./types/";
 
 import Svg from "./Svg";
-
-import { keyframesToAnimators } from "./helpers/layer";
 
 interface IdispatchProps {
     onUpdateAnimators: () => void;
@@ -38,8 +34,6 @@ const ratio = 2;
 
 class Renderer extends React.Component<RendererProps, IRendererState> {
 
-    private layers: any[];
-    private properties: any;
     private img: HTMLImageElement;
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
@@ -47,8 +41,6 @@ class Renderer extends React.Component<RendererProps, IRendererState> {
     constructor(props: RendererProps) {
         super(props);
 
-        this.properties = [];
-        this.layers = [];
     }
     public drawImage() {
         try {
@@ -99,36 +91,23 @@ class Renderer extends React.Component<RendererProps, IRendererState> {
     public render() {
         this.updateCanvasDimensions();
 
-        if (this.props.renderer.animatorsDirty) {
-            this.properties = [];
-            this.layers = [];
-            this.props.composition.layers.forEach((l) => {
-                const keyframes = l.keyframes;
-                const values = {};
-                this.layers.push(values);
-                this.properties.push(keyframesToAnimators(keyframes, values));
-            });
-            this.props.onUpdateAnimators();
-        }
-
-        this.properties.forEach((l: any) => {
-            Object.keys(l).forEach((p: string) => {
-                const anim: anime.AnimeInstance = l[p].animation;
-                if (anim) {
-                    const ms = 1.0 / this.props.player.fps * 1000;
-                    anim.seek(this.props.player.currentFrame * ms);
-                }
-            });
-        });
-
+        // map layer values to rendering objects
         const layers: any[] = [];
-        this.layers.forEach((values) => {
-            const style: React.CSSProperties = {
-                left: values.x as number,
-                position: "absolute",
-                top: values.y as number,
-            };
-            layers.push(<div key={layers.length} style={style}>ciao</div>);
+        this.props.composition.layers.forEach((layer, index) => {
+            const values = this.props.renderer.renderTree[index];
+            const layerStartFrame = layer.start * this.props.player.fps;
+            const layerEndFrame = (layer.start + layer.duration) * this.props.player.fps;
+            if (values && layerStartFrame <= this.props.player.currentFrame &&
+                layerEndFrame >= this.props.player.currentFrame) {
+
+                const style: React.CSSProperties = {
+                    position: "absolute",
+
+                    left: values.x as number,
+                    top: values.y as number,
+                };
+                layers.push(<div key={layers.length} style={style}>ciao</div>);
+            }
         });
         let data = renderToStaticMarkup(
             <Svg width={this.props.composition.width} height={this.props.composition.height}>
@@ -144,7 +123,7 @@ class Renderer extends React.Component<RendererProps, IRendererState> {
             }
         }
         return (
-            <div className="renderer" />
+            null
         );
     }
 }
