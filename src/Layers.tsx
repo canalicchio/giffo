@@ -24,8 +24,12 @@ interface IProps {
 class Layers extends React.Component<IProps & IdispatchProps> {
     public render() {
         const layers = this.props.composition.layers;
+        const cursorStyle = {
+            left: 100 + this.props.player.currentFrame * 5 - 5,
+        };
         return (
             <div className="layers">
+                <span className="cursor" style={cursorStyle}/>
                 {layers.map((l, i) => (<Layer key={`layer-${i}`} className="layer" layer={l} index={i} />))}
             </div>
         );

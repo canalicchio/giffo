@@ -31,14 +31,32 @@ class Rectangle extends React.Component {
 
                 defaultValue: 3,
             },
+            width: {
+                type: "number",
+
+                defaultValue: 100,
+            },
+
+            height: {
+                type: "number",
+
+                defaultValue: 100,
+            },
         };
     }
 
     render() {
         const label = this.props.label;
+        const style = {
+            ...this.props.style,
+
+            display: "block",
+            height: this.props.height,
+            width: this.props.width,
+        };
 
         return (
-            <div className="rectangle" style={this.props.style}>
+            <div className="rectangle" style={style}>
                 <span>{label}</span>
             </div>
         );

@@ -1,0 +1,18 @@
+.timeline {
+    position: relative;
+    display: block;
+}
+.timeline .cursor {
+    position: absolute;
+    width: 5px;
+    display: block;
+    background: rgba(255,0,0, 0.5);
+    height: 100%;
+    z-index: 100;
+    pointer-events: none;
+
+}
+.layers {
+    display: block;
+    position: relative;
+}

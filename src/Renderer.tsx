@@ -118,21 +118,24 @@ class Renderer extends React.Component<RendererProps, IRendererState> {
                 layers.push(<LayerType key={layers.length} style={style} {...values} />);
             }
         });
-        let data = renderToStaticMarkup(
+        const data = renderToStaticMarkup(
             <Svg width={this.props.composition.width} height={this.props.composition.height}>
                 {layers}
             </Svg>,
         );
-        data = encodeURIComponent(data);
-        const newSrc = `data:image/svg+xml,${data}`;
+        const newSrc = `data:image/svg+xml,${encodeURIComponent(data)}`;
         if (this.img) {
             const src = this.img.src;
             if (src !== newSrc) {
                 this.img.src = newSrc;
             }
         }
+        const rendererStyle = {
+            height: this.props.composition.height,
+            width: this.props.composition.width,
+        };
         return (
-            null
+            <div className="renderer" style={rendererStyle} dangerouslySetInnerHTML={{ __html: data }} />
         );
     }
 }

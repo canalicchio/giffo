@@ -67,7 +67,7 @@ class Frames extends React.Component<IProps & IdispatchProps, IState> {
 
         return (
             <div className="frames-slider">
-                <div className="frames-label">Frames</div>
+                <div className="frames-label" />
                 <div className="frames">
                     {frames.map((e, i) => (<FrameConnected key={i} zoom={zoom} index={i + 1} />))}
                 </div>

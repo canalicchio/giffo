@@ -5,6 +5,8 @@ import Frames from "./Frames";
 
 import Layers from "./Layers";
 
+import "./timeline.css";
+
 import {
     CompositionState,
     PlayerState,
@@ -31,7 +33,7 @@ interface IdispatchProps {
 class Timeline extends React.Component<IProps & IdispatchProps, IState> {
     public render() {
         return (
-            <div>
+            <div className="timeline">
                 <Frames />
                 <Layers />
             </div>
