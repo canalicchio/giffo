@@ -23,6 +23,8 @@ export const CompositionInitialState: CompositionState = {
     fps: 30,
     layers: [
         {
+            type: "Rectangle",
+
             duration: 1,
             start: 0,
 
@@ -55,26 +57,19 @@ export const CompositionInitialState: CompositionState = {
                     property: "y",
                     value: 200,
                 },
-            ],
-        },
-        {
-            duration: 1,
-            start: 0,
-
-            keyframes: [
                 {
-                    id: "0",
+                    id: "4",
 
-                    frame: 300,
-                    property: "x",
-                    value: 0,
+                    frame: 0,
+                    property: "foreground",
+                    value: "#000000",
                 },
                 {
-                    id: "1",
+                    id: "5",
 
                     frame: 1000,
-                    property: "x",
-                    value: 200,
+                    property: "foreground",
+                    value: "#ff0000",
                 },
             ],
         },

@@ -11,6 +11,8 @@ import * as constants from "./constants";
 
 import LayerProperty from "./Property";
 
+import { keyframesToProperties } from "./helpers/layer";
+
 interface IdispatchProps {
     onDragEnd: (start: number) => void;
     onDragEndDuration: (duration: number) => void;
@@ -34,7 +36,7 @@ interface ILayerState {
 
 export type LayerProps = IStateToProps & IProps & IdispatchProps;
 
-class Layer extends React.Component<LayerProps, ILayerState> {
+export class Layer extends React.Component<LayerProps, ILayerState> {
 
     public static getLayerProperties() {
         return {
@@ -88,7 +90,10 @@ class Layer extends React.Component<LayerProps, ILayerState> {
                 defaultValue: "#000000",
             },
         };
+
     }
+
+    public layerTypeClass: any;
 
     constructor(props: LayerProps) {
         super(props);
@@ -105,6 +110,9 @@ class Layer extends React.Component<LayerProps, ILayerState> {
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDragEndDuration = this.onDragEndDuration.bind(this);
         this.onSelectLayer = this.onSelectLayer.bind(this);
+        if (this.props.layer.type) {
+            this.layerTypeClass = require(`./layers/${this.props.layer.type}`).default;
+        }
 
     }
 
@@ -174,7 +182,18 @@ class Layer extends React.Component<LayerProps, ILayerState> {
 
     public render() {
 
-        const properties = Object.keys(this.state.properties);
+        // TODO don't run this every render
+        const lprops = {
+            ...Layer.getLayerProperties(),
+            ...this.layerTypeClass.getLayerProperties(),
+        };
+        const kprops: any = keyframesToProperties(this.props.layer.keyframes);
+
+        Object.keys(lprops).forEach((lp: string) => {
+            lprops[lp].keyframes = kprops[lp] ? kprops[lp].keyframes : [];
+        });
+        // TODO!!
+
         const framesStart = this.state.start * this.props.composition.fps * 5;
         const framesDuration = this.state.duration * this.props.composition.fps * 5;
         const layerDurationStyle: React.CSSProperties = {
@@ -216,8 +235,8 @@ class Layer extends React.Component<LayerProps, ILayerState> {
                     </div>
                 </div>
                 <div className="properties">
-                    {properties.map((p, index) => {
-                        const property = this.state.properties[p];
+                    {Object.keys(lprops).map((p: string, index: number) => {
+                        const property = lprops[p];
                         return (
                             <LayerProperty
                                 key={`p-${p}-${index}`}

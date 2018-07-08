@@ -4,6 +4,19 @@ import {
 
 import anime from "animejs";
 
+export const keyframesToProperties = (keyframes: Keyframe[]): any => (
+    keyframes.reduce((acc, k: Keyframe, i) => {
+        if (!acc[k.property]) {
+            acc[k.property] = {
+                keyframes: [],
+            };
+        }
+
+        acc[k.property].keyframes.push(k);
+        return acc;
+    }, {})
+);
+
 export const keyframesToAnimators = (keyframes: Keyframe[], values: any): any => {
     const props = keyframes.reduce((acc, k: Keyframe, i) => {
         if (!acc[k.property]) {

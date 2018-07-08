@@ -14,6 +14,8 @@ import {
 } from "../types/index";
 
 export const LayerInitialState: RenderableState = {
+    type: "Rectangle",
+
     duration: 100,
     start: 0,
 

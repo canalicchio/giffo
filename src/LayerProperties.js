@@ -7,11 +7,20 @@ class LayerProperties extends React.Component {
     constructor(props) {
         super(props);
 
+        if (this.props.layer.type) {
+            this.layerTypeClass = require(`./layers/${this.props.layer.type}`).default;
+        }
     }
 
     elementForProp(propertyName, property) {
+        const lprops = {
+            ...Layer.getLayerProperties(),
+            ...this.layerTypeClass.getLayerProperties(),
+        };
+
         const values = this.props.renderer.renderTree[this.props.index];
-        const value = values ? values[propertyName] : 0;
+        const defaultValue = lprops[propertyName].defaultValue;
+        const value = values ? values[propertyName] : defaultValue;
         return (
             <input
                 className="settings-text"
@@ -22,7 +31,11 @@ class LayerProperties extends React.Component {
 
     render() {
 
-        const lprops = Layer.getLayerProperties();
+        const lprops = {
+            ...Layer.getLayerProperties(),
+            ...this.layerTypeClass.getLayerProperties(),
+        };
+
         return (
             <div className="pane">
                 <div className="settings-title">Layer properties</div>

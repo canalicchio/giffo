@@ -40,7 +40,7 @@ class LayerProperty extends React.Component<LayerPropertyProps, IState> {
             startXKeyframe: 0,
             startYKeyframe: 0,
 
-            keyframes: props.property.keyframes,
+            keyframes: props.property ? props.property.keyframes : [],
         };
         this.onDragStartHandler = this.onDragStartHandler.bind(this);
         this.onDragHandler = this.onDragHandler.bind(this);

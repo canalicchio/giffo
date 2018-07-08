@@ -12,6 +12,8 @@ import {
     StoreState,
 } from "../types/index";
 
+import { Layer } from "../Layer";
+
 import { keyframesToAnimators } from "../helpers/layer";
 
 import anime from "animejs";
@@ -68,8 +70,23 @@ export const rendererMiddleware: Middleware<RendererAction|any, StoreState> =
             const renderTree: any[] = [];
 
             state.composition.layers.forEach((l) => {
+                const layerTypeClass: any = require(`../layers/${l.type}`).default;
+
                 const keyframes = l.keyframes;
+
+                const defaultProps: any = {
+                    ...Layer.getLayerProperties(),
+                    ...layerTypeClass.getLayerProperties(),
+                };
+
+                console.log(defaultProps);
+
                 const values = {};
+
+                Object.keys(defaultProps).forEach((p) => {
+                    values[p] = defaultProps[p].defaultValue;
+                });
+
                 renderTree.push(values);
                 animatorsTree.push(keyframesToAnimators(keyframes, values));
             });

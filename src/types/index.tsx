@@ -13,6 +13,7 @@ export type Property = Readonly<{
 }>;
 
 export type RenderableState = Readonly<{
+    type: string;
     duration: number;
     start: number;
     keyframes: Keyframe[];

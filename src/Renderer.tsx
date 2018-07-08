@@ -32,6 +32,8 @@ export type RendererProps = IStateToProps & IdispatchProps;
 
 const ratio = 2;
 
+const layerTypes: any = {};
+
 class Renderer extends React.Component<RendererProps, IRendererState> {
 
     private img: HTMLImageElement;
@@ -103,10 +105,17 @@ class Renderer extends React.Component<RendererProps, IRendererState> {
                 const style: React.CSSProperties = {
                     position: "absolute",
 
+                    backgroundColor: values.background as string,
+                    color: values.foreground as string,
+
                     left: values.x as number,
                     top: values.y as number,
                 };
-                layers.push(<div key={layers.length} style={style}>ciao</div>);
+                if (!layerTypes[layer.type]) {
+                    layerTypes[layer.type] = require(`./layers/${layer.type}`).default;
+                }
+                const LayerType: any = layerTypes[layer.type];
+                layers.push(<LayerType key={layers.length} style={style} {...values} />);
             }
         });
         let data = renderToStaticMarkup(
